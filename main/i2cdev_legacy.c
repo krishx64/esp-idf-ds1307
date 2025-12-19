@@ -11,7 +11,7 @@
 
 #define TAG "I2CDEV"
 
-esp_err_t i2c_dev_init(const i2c_dev_t *dev)
+esp_err_t i2c_dev_init(i2c_dev_t *dev)
 {
 	ESP_LOGI(TAG, "Legacy i2c driver is used");
 	i2c_config_t i2c_config = {

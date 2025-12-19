@@ -7,7 +7,9 @@
 
 #include "ds1307.h"
 
-#define I2C_FREQ_HZ 1000000
+// DS1307 supports standard-mode I2C up to 100 kHz.
+// Using 1 MHz here can cause read/write failures.
+#define I2C_FREQ_HZ 100000
 
 #define CHECK_ARG(ARG) do { if (!ARG) return ESP_ERR_INVALID_ARG; } while (0)
 

@@ -1,9 +1,18 @@
-# The following lines of boilerplate have to be in your project's
-# CMakeLists in this exact order for cmake to work correctly
-cmake_minimum_required(VERSION 3.5)
+set(component_srcs "main/ds1307.c")
 
-# This example uses an extra component for common functions such as Wi-Fi and Ethernet connection.
-set(EXTRA_COMPONENT_DIRS $ENV{IDF_PATH}/examples/common_components/protocol_examples_common)
+# get IDF version for comparison
+set(idf_version "${IDF_VERSION_MAJOR}.${IDF_VERSION_MINOR}")
 
-include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-project(ds1307)
+if(idf_version VERSION_GREATER_EQUAL "5.2")
+	list(APPEND component_srcs "main/i2cdev_new.c")
+else()
+	list(APPEND component_srcs "main/i2cdev_legacy.c")
+endif()
+
+idf_component_register(
+    SRCS ${component_srcs}
+    INCLUDE_DIRS "main"
+    REQUIRES driver
+)
+
+
